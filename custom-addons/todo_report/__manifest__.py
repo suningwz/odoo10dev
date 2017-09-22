@@ -49,7 +49,7 @@ To-Do Report Module Project.
         'python': [
         ],
     },
-    'data': ['reports/todo_report.xml'
+    'data': ['reports/todo_report.xml','reports/todo_model_report.xml','reports/todo_report_menu.xml',
     ],
     'demo': [
     ],

@@ -5,4 +5,4 @@
 #    __manifest__.py file at the root folder of this module.                   #
 ###############################################################################
 
-from . import reports
+from . import todo_task_report
