@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    
+    <record id="action_todo_task_act_window" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Todo Task</field>
+        <field name="res_model">todo.task</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="target">current</field>
+    </record>
+
+    <record id="action_todo_task_stage_act_window" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Todo Task Stage</field>
+        <field name="res_model">todo.task.stage</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="target">current</field>
+    </record>
+    
+    <record id="action_todo_task_tag_act_window" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Todo Task Tag</field>
+        <field name="res_model">todo.task.tag</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="target">current</field>
+    </record>
+
+    
+    <menuitem id="menu_todo_task_top"  name="Todo Task" action="action_todo_task_act_window" />
+
+    
+    <menuitem id="menu_todo_task"  
+        name="Task"
+        sequence="10"
+        parent="menu_todo_task_top"
+        action="action_todo_task_act_window" />
+   
+    <menuitem id="menu_todo_task_config"  name="Config"
+        sequence="100"
+        parent="menu_todo_task_top"/>
+        
+    <menuitem id="menu_todo_task_stage"  name="Stage"
+        sequence="10"
+        parent="menu_todo_task_config"
+        action="action_todo_task_stage_act_window" />
+    
+    <menuitem id="menu_todo_task_tag"  name="Tag"
+        sequence="20"
+        parent="menu_todo_task_config"
+        action="action_todo_task_tag_act_window" />
+        
+        
+</odoo>
