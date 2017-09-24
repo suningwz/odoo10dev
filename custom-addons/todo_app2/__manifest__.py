@@ -33,7 +33,7 @@ To-Do Task Module Project.
         'python': [
         ],
     },
-    'data': ['views/todo_menu.xml',
+    'data': ['views/todo_view.xml','views/todo_menu.xml',
     ],
     'demo': [
     ],

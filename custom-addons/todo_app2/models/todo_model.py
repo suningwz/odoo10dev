@@ -9,6 +9,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
 class TodoTask(models.Model):
+    
     _name='todo.task'
     _description='todo.task model'
     
@@ -42,13 +43,46 @@ class TodoTask(models.Model):
     )
     stage_state = fields.Selection(
         string=u'Stage State',        
-        related='stage_id.state',        
+        related='stage_id.state',                       
     )
     
     tag_ids = fields.Many2many(
         string=u'Tags',
         comodel_name='todo.task.tag',
     )
+
+    @api.multi
+    def do_clear_done(self):
+        domain=[('is_done','=',True),'|',('user_id','=',self.env.uid),('user_id','=',False)]
+        done=self.search(domain)
+        done.write({'active':False})
+        return True
+
+    @api.multi
+    def do_toggle_done(self):
+        for task in self:
+            if task.user_id != self.env.user_id:
+                raise ValidationError('Only the responsible can do this')
+            else:
+                task.is_done = not task.is_done
+        return True
+    
+  
+    user_todo_count = fields.Integer(
+        string=u'User To-Do Count',
+        compute='_compute_user_todo_count'
+        )        
+
+    def _compute_user_todo_count(self):
+        for record in self:
+            record.user_todo_count = record.search_count([('user_id','=','record.user_id.id')])
+     
+
+    
+
+    
+    
+
 
 
 class Stage(models.Model):
@@ -80,6 +114,8 @@ class Stage(models.Model):
         string=u'Image',
     )
 
+    
+
 
 class Tag(models.Model):
     _name='todo.task.tag'
@@ -99,9 +135,26 @@ class Tag(models.Model):
     )
 
     
+
+
+  
+
     
     
+
+
     
+
+
+    
+
+
+
+    
+
+
+    
+        
     
     
     
