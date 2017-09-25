@@ -15,11 +15,25 @@
                 <field name="user_id" />
                 <field name="refer_to" />
                 <field name="stage_state" />
+                <field name="state" />
+                
             
             </tree>
         </field>
     </record>
     
+    
+    <record id="action_todo_task_button_act_window" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Todo Task Button Action</field>
+        <field name="res_model">todo.task</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="target">current</field>
+        <field name="domain">[('user_id','=',default_user_id)]</field>
+    </record>
+    
+
     <!-- Form view for "todo.task" -->
     <record id="view_todo_task_form" model="ir.ui.view">
         <field name="name">view.todo.task.form</field>
@@ -35,6 +49,8 @@
                     <button name="do_toggle_done" string="Toggle Done" type="object" class="oe_highlight"
                     attrs="{ 'invisible': [('stage_state','in',['draft'])] }"
                     />
+                
+                 <field name="stage_id" widget="statusbar" clickable="True" options="{'fold_field':'fold'}"/>
                     
                     
                 </header>
@@ -49,11 +65,33 @@
                             <label for="user_id" class="oe_edit_only"/>
                             <field name="user_id" class="oe_inline"/>                              
                         </h3>
+                        
                     </div>
+
+                    <div class="oe_right oe_button_box">
+                        <button class="oe_stat_button"
+                                name="%(action_todo_task_button_act_window)d"
+                                type="action"
+                                icon="fa-tasks"
+                                context="{'default_user_id':user_id}"
+                                help="action_todo_task_button_act_window" >
+
+                             <field name="user_todo_count" string="To-Tos" widget="statinfo" />
+                             
+                        </button>
+
+                               
+                            
+                    </div>
+                    
 
                     <group name="group_top">
                         <group name="group_left">
                             <field name="refer_to" />
+                            
+                            <field name="active" />
+                            
+
                         </group>
                         <group name="group_right">
                             <field name="date_deadline" />

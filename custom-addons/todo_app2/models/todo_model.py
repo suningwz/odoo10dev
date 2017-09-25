@@ -45,6 +45,13 @@ class TodoTask(models.Model):
         string=u'Stage State',        
         related='stage_id.state',                       
     )
+    state = fields.Selection(
+        string=u'State',
+        selection=[('draft', 'New'), ('open', 'Started'),('done','Closed')],
+        
+        default='draft',
+        
+    )
     
     tag_ids = fields.Many2many(
         string=u'Tags',
@@ -61,7 +68,7 @@ class TodoTask(models.Model):
     @api.multi
     def do_toggle_done(self):
         for task in self:
-            if task.user_id != self.env.user_id:
+            if task.user_id != self.env.user:
                 raise ValidationError('Only the responsible can do this')
             else:
                 task.is_done = not task.is_done
@@ -75,7 +82,7 @@ class TodoTask(models.Model):
 
     def _compute_user_todo_count(self):
         for record in self:
-            record.user_todo_count = record.search_count([('user_id','=','record.user_id.id')])
+            record.user_todo_count = record.search_count([('user_id','=',record.user_id.id)])
      
 
     
@@ -87,6 +94,13 @@ class TodoTask(models.Model):
 
 class Stage(models.Model):
     _name='todo.task.stage'
+    _order="sequence,name"
+
+    
+    name = fields.Char(
+        string=u'Name',
+    )
+    
     desc = fields.Text(
         string=u'Description',
     )
