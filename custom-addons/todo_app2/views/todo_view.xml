@@ -7,7 +7,9 @@
         <field name="name">view.todo.task.tree</field>
         <field name="model">todo.task</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree 
+            decoration-success="stage_state == 'draft'"
+            decoration-danger="is_done">
             
                 <field name="name" />
                 <field name="date_deadline" />
